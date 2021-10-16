@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef, useState } from 'react';
+import Delayed from './components/Delayed';
+
+function LengthDisplayer(props) {
+    return <div className='display-length'>The length of the text is {props.length}</div>
+}
 
 function App() {
+  const inputRef = useRef();
+  const [length, setLength] = useState(0);
+
+  const buttonOnClickHandler = () => {
+    const value = inputRef.current.value;
+    setLength(value.length);
+};
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+        <input type="text" className="text-input" ref={inputRef}/>
+        <button onClick={buttonOnClickHandler} >Display Length</button>
+        {length >= 1 && <Delayed><LengthDisplayer length={length} /></Delayed>}
+    </>
   );
 }
 
